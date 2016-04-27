@@ -55,16 +55,30 @@ Enemy = function(index, game, player, bullets, health, image, speed, firerate){
     this.game.physics.arcade.velocityFromRotation(this.image.rotation, this.speed, this.image.body.velocity);
 };
 
+Enemy.prototype.damage = function(damage){
+    this.health -= damage;
+    if (this.health <=0){
+        this.alive = false;
+        this.image.kill();
+        return true;
+    }
+    return false;
+}
+
 Enemy.prototype.update = function() {
     this.image.rotation = this.game.physics.arcade.angleBetween(this.image, this.player);
     this.game.physics.arcade.velocityFromRotation(this.image.rotation, this.speed, this.image.body.velocity);
 };
+
+
+
 
 var player;
 var currentSpeed = 0;
 var barks;
 var nextFire = 0;
 var fireRate = 400;
+var barkDamage = 1;
 
 var enemies;
 var enemyBullets;
@@ -163,6 +177,7 @@ BasicGame.Game.prototype = {
     for (var i = 0; i < enemies.length; i++){
         if (enemies[i].alive){
             enemiesAlive++;
+            this.physics.arcade.overlap(barks, enemies[i].image, this.barkHitEnemy, null, this);
             enemies[i].update();
         }
     }
@@ -181,6 +196,14 @@ BasicGame.Game.prototype = {
             bark.rotation = player.rotation;
             this.game.physics.arcade.velocityFromRotation(bark.rotation, 600, bark.body.velocity);
         }
+    },
+
+    barkHitEnemy: function (enemy, bark){
+        bark.kill();
+        var destroyed = enemies[enemy.name].damage(barkDamage);
+        // if (destroyed){
+         //   var
+        //}
     },
 
 
