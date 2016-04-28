@@ -27,6 +27,53 @@ BasicGame.Game = function (game) {
 
 
 
+
+
+
+// Enemy parent class
+function Enemy(index, game, player, bullets){
+    this.game = game;
+    this.player = player;
+    this.bullet = bullets;
+    this.alive = true;
+    var x = game.rnd.integerInRange(1100, 2900) % 2000;
+    var y = game.rnd.integerInRange(1100, 2900) % 2000;
+    this.health = 0;
+    this.image = null;
+}
+
+Enemy.prototype.damage = function(damage){
+    this.health -= damage;
+    if (this.health <=0){
+        this.alive = false;
+        this.image.kill();
+        return true;
+    }
+    return false;
+};
+
+Enemy.prototype.update = function() {
+    this.image.rotation = this.game.physics.arcade.angleBetween(this.image, this.player);
+    this.game.physics.arcade.velocityFromRotation(this.image.rotation, this.speed, this.image.body.velocity);
+};
+
+function oldMan(){
+    Enemy.call(this);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Enemy = function(index, game, player, bullets, health, image, speed, firerate){
     // random spawn locations at least 100 away from player start
     var x = game.rnd.integerInRange(1100, 2900) % 2000;
@@ -41,8 +88,10 @@ Enemy = function(index, game, player, bullets, health, image, speed, firerate){
     this.alive = true;
     this.speed = speed;
     this.image = game.add.sprite(x, y, image);
+    this.image.animations.add('oldmanmoves', [0, 1, 2], 15, true);
+    this.image.animations.play('oldmanmoves');
     enemiesGroup.add(this.image);
-    console.log(enemiesGroup);
+
 
 
     this.image.anchor.set(0.5);
@@ -63,7 +112,7 @@ Enemy.prototype.damage = function(damage){
         return true;
     }
     return false;
-}
+};
 
 Enemy.prototype.update = function() {
     this.image.rotation = this.game.physics.arcade.angleBetween(this.image, this.player);
@@ -79,6 +128,7 @@ var barks;
 var nextFire = 0;
 var fireRate = 400;
 var barkDamage = 1;
+var bones = 0;
 
 var enemies;
 var enemyBullets;
@@ -116,7 +166,7 @@ BasicGame.Game.prototype = {
         enemiesGroup = this.game.add.physicsGroup();
 
         for (var i = 0; i < enemiesTotal; i++) {
-            enemies.push(new Enemy(i, this.game, player, enemyBullets, 3, 'oldman', 100, 100));
+            enemies.push(new Enemy(i, this.game, player, enemyBullets, 1, 'oldman', 50, 100));
 
         }
 
