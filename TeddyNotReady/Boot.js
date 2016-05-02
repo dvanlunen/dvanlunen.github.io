@@ -1,10 +1,10 @@
-var BasicGame = {};
+var TeddyNotReady = {};
 
-BasicGame.Boot = function (game) {
+TeddyNotReady.Boot = function (game) {
 
 };
 
-BasicGame.Boot.prototype = {
+TeddyNotReady.Boot.prototype = {
 
     init: function () {
         //  Unless you specifically know your game needs to support multi-touch I would recommend setting this to 1

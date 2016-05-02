@@ -1,5 +1,5 @@
 
-BasicGame.Preloader = function (game) {
+TeddyNotReady.Preloader = function (game) {
 
 	this.background = null;
 	this.preloadBar = null;
@@ -8,54 +8,55 @@ BasicGame.Preloader = function (game) {
 
 };
 
-BasicGame.Preloader.prototype = {
+TeddyNotReady.Preloader.prototype = {
 
 	preload: function () {
 		//	A nice sparkly background and a loading progress bar
 		this.background = this.add.sprite(0, 0, 'Background');
 		this.preloadBar = this.add.sprite(200, 268, 'preloaderBar');
-
-		//	This sets the preloadBar sprite as a loader sprite.
-		//	What that does is automatically crop the sprite from 0 to full-width
-		//	as the files below are loaded in.
 		this.load.setPreloadSprite(this.preloadBar);
 
-		//	Here we load the rest of the assets our game needs.
-		//	As this is just a Project Template I've not provided these assets, swap them for your own.
-		// this.load.image('titlepage', 'images/title.jpg');
-		this.load.spritesheet('playButton', 'images/PlayButton.png', 200, 32);
-		this.load.audio('titleMusic', ['audio/Happy Background Music.mp3']);
+		// Load all assets
 
-		//	+ lots of other required assets here
-		this.load.spritesheet('player', 'images/dogsheet.png', 64, 64);
+			//audio
+		this.load.audio('titleMusic', ['audio/MenuMusic.ogg']);
+		// this.load.audio('playerdead', ['audio/dogdead.ogg']);
+		// this.load.audio('playerhurt', ['audio/doghit.ogg']);
+		this.load.audio('oldmandead', ['audio/oldmandead.ogg']);
+		this.load.audio('mandead', ['audio/mandead.ogg']);
+
+			//images
+		this.load.spritesheet('player', 'images/dogsheet.png', 64, 64, 4);
+		this.load.spritesheet('head', 'images/doghead.png', 32, 32, 2);
 		this.load.image('bark', 'images/bark.png');
 		this.load.spritesheet('oldman', 'images/oldman.png', 64, 64);
+		this.load.spritesheet('man','images/man.png', 64, 64);
+		this.load.image('6heart','images/6heart.png');
+		this.load.image('5heart','images/5heart.png');
+		this.load.image('4heart','images/4heart.png');
+		this.load.image('3heart','images/3heart.png');
+		this.load.image('2heart','images/2heart.png');
+		this.load.spritesheet('1heart','images/1heart.png',32,32);
+		this.load.image('bone','images/bone.png');
+		this.load.spritesheet('iconbutton','images/iconbutton.png', 80, 80);
+		this.load.image('locklvl','images/lockedlevel.png');
+		this.load.spritesheet('widebutton','images/WideButton.png', 260, 40);
+		this.load.image('lockwide','images/WideButtonLocked.png');
+
+			//font
+		this.load.bitmapFont('gooddog', 'font/gooddog.png', 'font/gooddog.fnt');
 	},
 
 	create: function () {
-
 		//	Once the load has finished we disable the crop because we're going to sit in the update loop for a short while as the music decodes
 		this.preloadBar.cropEnabled = false;
-
 	},
 
 	update: function () {
-
-		//	You don't actually need to do this, but I find it gives a much smoother game experience.
-		//	Basically it will wait for our audio file to be decoded before proceeding to the MainMenu.
-		//	You can jump right into the menu if you want and still play the music, but you'll have a few
-		//	seconds of delay while the mp3 decodes - so if you need your music to be in-sync with your menu
-		//	it's best to wait for it to decode here first, then carry on.
-		
-		//	If you don't have any music in your game then put the game.state.start line into the create function and delete
-		//	the update function completely.
-		//
 		if (this.cache.isSoundDecoded('titleMusic')  &&  this.ready === false)
 		{
 			this.ready = true;
 			this.state.start('MainMenu');
 		}
-
 	}
-
 };
