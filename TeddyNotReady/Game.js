@@ -100,6 +100,32 @@ function Man(index, game, player, locslot){
 Man.prototype = Object.create(Enemy.prototype);
 Man.prototype.constructor = Man;
 
+// Old Man
+function oldMan(index, game, player, locslot){
+    Enemy.call(this, index, game, player, locslot);
+    this.health = 1;
+    this.speed = 70;
+    this.animspeed = 5;
+    this.addEnemySprite('oldman','oldmanmove');
+    this.value = 1;
+    // this.deathSound = oldManDeadSound;
+}
+oldMan.prototype = Object.create(Enemy.prototype);
+oldMan.prototype.constructor = oldMan;
+
+// Man
+function Man(index, game, player, locslot){
+    Enemy.call(this, index, game, player, locslot);
+    this.health = 2;
+    this.speed = 100;
+    this.animspeed = 10;
+    this.addEnemySprite('man','manmove');
+    this.value = 3;
+    // this.deathSound = manDeadSound;
+}
+Man.prototype = Object.create(Enemy.prototype);
+Man.prototype.constructor = Man;
+
 // bones
 var bones = 0;
 var bonesText;
@@ -131,6 +157,8 @@ var enemyBullets;
 
 // had to create a variable to story a time condition to stop displaying game over and go back to main menu
 var endGame;
+
+
 
 
 
@@ -353,6 +381,23 @@ TeddyNotReady.Level1.prototype = {
                 player.kill();
                 healthbar.kill();
                 head.kill();
+                endGame = this.time.now + 3000;
+            } else {
+                // hurtSound.play();
+                healthbar.loadTexture(playerHealth + 'heart');
+                if (playerHealth === 1) {
+                    healthbar.animations.add('lastheart', [0, 1, 2], 5, true);
+                    healthbar.animations.play('lastheart');
+                }
+            }
+            
+        }
+
+    },
+
+    quitGame: function (pointer) {
+                player.kill();
+                healthbar.kill();
                 endGame = this.time.now + 3000;
             } else {
                 // hurtSound.play();
