@@ -396,23 +396,6 @@ TeddyNotReady.Level1.prototype = {
     },
 
     quitGame: function (pointer) {
-                player.kill();
-                healthbar.kill();
-                endGame = this.time.now + 3000;
-            } else {
-                // hurtSound.play();
-                healthbar.loadTexture(playerHealth + 'heart');
-                if (playerHealth === 1) {
-                    healthbar.animations.add('lastheart', [0, 1, 2], 5, true);
-                    healthbar.animations.play('lastheart');
-                }
-            }
-            
-        }
-
-    },
-
-    quitGame: function (pointer) {
         
         for (var i = 0; i < enemies.length; i++){
             enemies[i].enemy.kill();
