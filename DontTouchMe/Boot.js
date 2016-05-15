@@ -1,10 +1,10 @@
-var TeddyNotReady = {};
+var DontTouchMe = {};
 
-TeddyNotReady.Boot = function (game) {
+DontTouchMe.Boot = function (game) {
 
 };
 
-TeddyNotReady.Boot.prototype = {
+DontTouchMe.Boot.prototype = {
 
     init: function () {
         //  Unless you specifically know your game needs to support multi-touch I would recommend setting this to 1
@@ -24,8 +24,6 @@ TeddyNotReady.Boot.prototype = {
         }
         else
         {
-            //  Same goes for mobile settings.
-            //  In this case we're saying "scale the game, no lower than 480x260 and no higher than 1024x768"
             this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         }
 
