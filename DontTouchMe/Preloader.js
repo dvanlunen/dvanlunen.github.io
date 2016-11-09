@@ -56,6 +56,7 @@ DontTouchMe.Preloader.prototype = {
 		this.load.image('locklvl','images/lockedlevel.png');
 		this.load.spritesheet('widebutton','images/WideButton.png', 260, 40);
 		this.load.image('lockwide','images/WideButtonLocked.png');
+		this.load.spritesheet('barkspeedbutton','images/barkspeedbutton.png', 360, 80);
 
 			//font
 		this.load.bitmapFont('gooddog', 'font/gooddog.png', 'font/gooddog.fnt');

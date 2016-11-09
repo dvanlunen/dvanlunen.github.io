@@ -1,5 +1,6 @@
-
-var levelsComplete = 0;
+// bones
+var bones = 0;
+var levelsComplete = 15;
 var levelsData = [
 	{lvlID: 1, 
      wrldbounds: {width:2000, height:2000},
@@ -133,29 +134,28 @@ var levelsData = [
                  ];
 
 DontTouchMe.MainMenu = function (game) {
-
+    this.game = game;
     this.music = null;
-    this.playButton = null;
 
 };
 
 DontTouchMe.MainMenu.prototype = {
 
     create: function () {
-
-        //    We've already preloaded our assets, so let's kick right into the Main Menu itself.
-        //    Here all we're doing is playing some music and adding a picture and button
-
         this.music = this.add.audio('titleMusic', 1, true);
         this.music.play();
         this.background = this.add.sprite(0, 0, 'Background');
+
 
         var i = 1;
         var x;
         var y;
         var levelButtons = [];
+
+
+
         while (i < 17){
-            x = 100 + ((i-1) % 4)*100;
+            x = 20 + ((i-1) % 4)*100;
             y = 100 + 100 * Math.floor((i-1)/4);
             this.add.image(x, y, 'locklvl');
             if (i < levelsComplete + 2){
@@ -167,11 +167,13 @@ DontTouchMe.MainMenu.prototype = {
         }
         i = 1;
         while (i < 5){
-            this.add.image(520, 16 + 100*i, 'lockwide');
+            this.add.button(420, 20 + 100*i, 'lockwide');
             i++;
         }
 
-
+        bone = this.add.sprite(760, 5, 'bone');
+        bonesText = this.add.text(755, 3, bones, {font: "32px Arial", align: "right"});
+        bonesText.anchor.set(1, 0);
 
     },
 

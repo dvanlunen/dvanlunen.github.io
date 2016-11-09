@@ -1,8 +1,6 @@
 
 
-// bones
-var bones = 0;
-var bonesText;
+
 
 // player
 var player;
@@ -93,7 +91,6 @@ DontTouchMe.Game.prototype = {
         leashes.setAll('outOfBoundsKill', true);
         leashes.setAll('checkWorldBounds', true);
 
-
             // locations
         var locIndexCounter = 0;
         var locbucket = [];
@@ -101,7 +98,7 @@ DontTouchMe.Game.prototype = {
                                    ((this.levelData.wrldbounds.height / 100) - 2) - 1){
             // 1 location per 100x100 square in the world that is at least 100 from the player start
             locbucket.push({x:(((locIndexCounter % ((this.levelData.wrldbounds.width / 100) - 2)) * 100) +
-                               100 + this.levelData.playerStart.x) % this.levelData.wrldbounds.width, 
+                               100 + this.levelData.playerStart.x) % this.levelData.wrldbounds.width,
                             y:((100 * Math.floor(locIndexCounter / ((this.levelData.wrldbounds.width / 100) - 2))) +
                                100 + this.levelData.playerStart.y) % this.levelData.wrldbounds.height});
             locIndexCounter++;
@@ -132,16 +129,15 @@ DontTouchMe.Game.prototype = {
                            this.levelData.numTrainers){
                 enemies.push(new Trainer(i, this.game, player, startingloc, leashes));
             }
-            
             i++;
         }
-
 
         // visuals
         player.bringToTop();
         head.bringToTop();
         this.camera.follow(player);
         this.camera.focusOnXY(0, 0);
+
         healthbar = this.add.sprite(this.camera.x, this.camera.y, playerHealth + 'heart');
         healthbar.fixedToCamera = true;
         healthbar.cameraOffset.setTo(5, 5);
@@ -149,8 +145,6 @@ DontTouchMe.Game.prototype = {
         bone = this.add.sprite(this.camera.x + 760, this.camera.y + 5, 'bone');
         bone.fixedToCamera = true;
         bone.cameraOffset.setTo(760, 5);
-
-
         bonesText = this.add.text(this.camera.x + 755, this.camera.y + 3,
                     bones, {font: "32px Arial", align: "right"});
         bonesText.anchor.set(1, 0);
@@ -158,8 +152,6 @@ DontTouchMe.Game.prototype = {
         bonesText.cameraOffset.setTo(755, 3);
         // setup keys
         cursors = this.input.keyboard.createCursorKeys();
-        
-
     },
 
     update: function () {
@@ -236,13 +228,15 @@ DontTouchMe.Game.prototype = {
     // Enemy Movment
     this.physics.arcade.collide(enemiesGroup, enemiesGroup);
     enemiesAlive = 0;
-    for (var i = 0; i < enemies.length; i++){
+    var i;
+    for (i = 0; i < enemies.length; i++){
         if (enemies[i].alive){
             enemiesAlive++;
             this.physics.arcade.overlap(barks, enemies[i].enemy, this.barkHitEnemy, null, this);
             enemies[i].update();
         }
     }
+
     // check if level complete
     if (enemiesAlive === 0 && endGame === Infinity){
         levelOverText = this.add.bitmapText(this.camera.x + 100, this.camera.y + 250,
@@ -264,7 +258,6 @@ DontTouchMe.Game.prototype = {
     this.physics.arcade.overlap(player, enemiesGroup, this.playerHit, null, this);
     this.physics.arcade.overlap(player, leashes, this.playerHit, null, this);
 
-    
     // other updates
     bonesText.text = bones;
     grass.tilePosition.x = -this.camera.x;
@@ -273,7 +266,7 @@ DontTouchMe.Game.prototype = {
     },
 
     fire: function () {
-        if (this.time.now > nextFire && barks.countDead() > 0){
+        if (this.time.now > nextFire && barks.countDead() > 0 && endGame == Infinity){
             nextFire = this.time.now + fireRate;
             var bark = barks.getFirstExists(false);
             bark.reset(player.x, player.y);
@@ -310,19 +303,17 @@ DontTouchMe.Game.prototype = {
                     healthbar.animations.play('lastheart');
                 }
             }
-            
         }
 
     },
 
-    quitGame: function (pointer) {
-        
-        for (var i = 0; i < enemies.length; i++){
+    quitGame: function () {
+        'use strict';
+        var i;
+        for (i = 0; i < enemies.length; i += 1) {
             enemies[i].enemy.kill();
         }
-        //  Then let's go back to the main menu.
+        //  go back to the main menu.
         this.state.start('MainMenu');
-
     }
-
 };
