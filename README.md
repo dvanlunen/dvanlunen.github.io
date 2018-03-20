@@ -1,3 +1,13 @@
-# My Website
+# Dan VanLunen's Portfolio
 
-Thanks to Freelancer Start Bootstrap website template Copyright 2013-2015 Iron Summit Media Strategies, LLC. 
+ This page lists projects I have worked on. I have experience with
+
+ - Convolutional Neural Networks (Keras/Tensorflow)
+ - R
+ - Python
+ - JavaScript
+ - Teaching Analytics
+ - Excel
+ - SAS
+ - AWS
+ 
